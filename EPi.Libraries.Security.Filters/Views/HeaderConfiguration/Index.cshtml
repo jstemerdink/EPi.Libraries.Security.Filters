@@ -1,0 +1,282 @@
+﻿@using EPi.Libraries.Security.Filters.Models
+@using EPiServer
+@using EPiServer.Shell
+@model SecurityFilterConfiguration
+@{
+    Layout = null;
+    List<SelectListItem> xFramePolicyOptions = new List<SelectListItem> { new SelectListItem { Text = SecurityFilterConfiguration.SameOrigin, Value = SecurityFilterConfiguration.SameOrigin, Selected = Model.XFrameOptionsPolicy.Equals(SecurityFilterConfiguration.SameOrigin, StringComparison.OrdinalIgnoreCase) }, new SelectListItem { Text = SecurityFilterConfiguration.Disabled, Value = SecurityFilterConfiguration.Disabled, Selected = Model.XFrameOptionsPolicy.Equals(SecurityFilterConfiguration.Disabled, StringComparison.OrdinalIgnoreCase) }, new SelectListItem { Text = SecurityFilterConfiguration.Deny, Value = SecurityFilterConfiguration.Deny, Selected = Model.XFrameOptionsPolicy.Equals(SecurityFilterConfiguration.Deny, StringComparison.OrdinalIgnoreCase) } };
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/App_Themes/Default/styles/system.css")">
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/App_Themes/Default/styles/ToolButton.css")">
+    <link rel="stylesheet" type="text/css" href="@Paths.ToShellResource("8.0.0.0/ClientResources/epi/themes/legacy/ShellCore.css")" />
+    <link rel="stylesheet" type="text/css" href="@Paths.ToShellResource("8.0.0.0/ClientResources/epi/themes/legacy/ShellCoreLightTheme.css")" />
+    <link rel="stylesheet" type="text/css" href="@UriSupport.ResolveUrlFromUIBySettings("8.0.0.0/ClientResources/Epi/Base/CMS.css")" />
+    <script type="text/javascript" src="@Paths.ToShellResource("8.0.0.0/ClientResources/ShellCore.js")"></script>
+    <title>Manage security headers</title>
+</head>
+<body id="body">
+    @using (Html.BeginForm("Save", "HeaderConfiguration"))
+    {
+        <div class="epi-contentContainer epi-padding">
+            <div class="epi-contentArea">
+                <h1 class="EP-prefix">
+                    Security headers
+                </h1>
+                <p class="EP-systemInfo">
+                    See <a href="http://www.dotnetnoob.com/2012/09/security-through-http-response-headers.html" target="_blank">Security through HTTP response headers</a>
+                    and the <a href="https://github.com/NWebsec/NWebsec/wiki" target="_blank">NWebsec wiki</a> for more information.
+                </p>
+            </div>
+
+            <table class="epi-default" cellspacing="0" id="FullRegion_MainRegion_DataViewControl" style="border-style: None; border-collapse: collapse;">
+                <tr>
+                    <th scope="col">Setting</th>
+                    <th scope="col">Enable</th>
+                    <th scope="col">Addtional settings</th>
+                </tr>
+                <tr>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        <strong>Versions.</strong><br />Remove version HTTP headers.
+                    </td>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        @Html.CheckBoxFor(m => m.DisableVersionHeaders)
+                    </td>
+                    <td style="white-space: nowrap; vertical-align: top;"></td>
+                </tr>
+                <tr>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        <strong>XContentType.</strong><br />Stop IE9 and below from sniffing files and overriding the Content-Type header (MIME type).
+                    </td>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        @Html.CheckBoxFor(m => m.EnableXContentTypeOptions)
+                    </td>
+                    <td style="white-space: nowrap; vertical-align: top;"></td>
+                </tr>
+                <tr>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        <strong>XDownload.</strong><br />When users save the page, stops them from opening it and forces a save and manual open.
+                    </td>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        @Html.CheckBoxFor(m => m.EnableXDownloadOptions)
+                    </td>
+                    <td style="white-space: nowrap; vertical-align: top;"></td>
+
+                </tr>
+                <tr>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        <strong>XFrame.</strong><br />Stop clickjacking by stopping the page from opening in an iframe or only allowing it from the same origin.
+                    </td>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        @Html.CheckBoxFor(m => m.EnableXFrameOptions)
+                    </td>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        @Html.DropDownListFor(m => m.XFrameOptionsPolicy, xFramePolicyOptions, "Select policy")
+                    </td>
+                </tr>
+                <tr>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        <strong>Content-Security-Policy.</strong><br />Add the Content-Security-Policy (CSP) HTTP headers.
+                    </td>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        @Html.CheckBoxFor(m => m.EnableContentSecurityPolicy)
+                    </td>
+                    <td style="white-space: nowrap; vertical-align: top;"></td>
+                </tr>
+            </table>
+
+            <div class="epi-contentArea">
+                <h1 class="EP-prefix">
+                    Content security policies
+                </h1>
+                <p class="EP-systemInfo">
+                    See <a href="https://developer.mozilla.org/en-US/docs/Web/Security/CSP/CSP_policy_directives" target="_blank">CSP policy directives</a>
+                    and the <a href="https://github.com/NWebsec/NWebsec/wiki" target="_blank">NWebsec wiki</a> for more information.
+                </p>
+            </div>
+
+            <table class="epi-default" cellspacing="0" id="FullRegion_MainRegion_DataViewControl" style="border-style: None; border-collapse: collapse;">
+                <tr>
+                    <th scope="col">Setting</th>
+                    <th scope="col">Enable</th>
+                    <th scope="col">Custom sources</th>
+                </tr>
+                <tr>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        <strong>base-uri</strong><br />
+                        This directive restricts the document base URL.
+                    </td>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        @Html.CheckBoxFor(m => m.AllowBaseUriFromSameDomain)
+                        @Html.LabelFor(m => m.AllowBaseUriFromSameDomain, "Self")
+                    </td>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        @Html.TextAreaFor(m => m.CustomBaseUriSources)
+                    </td>
+                </tr>
+                <tr>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        <strong>child-src</strong><br />
+                        This directive restricts from where the protected resource can load web workers or embed frames.
+                    </td>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        @Html.CheckBoxFor(m => m.AllowChildSrcFromSameDomain)
+                        @Html.LabelFor(m => m.AllowChildSrcFromSameDomain, "Self")
+                    </td>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        @Html.TextAreaFor(m => m.CustomChildSources)
+                    </td>
+                </tr>
+                <tr>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        <strong>connect-src</strong><br />
+                        This directive restricts which URIs the protected resource can load using script interfaces.
+                    </td>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        @Html.CheckBoxFor(m => m.AllowConnectionsFromSameDomain)
+                        @Html.LabelFor(m => m.AllowConnectionsFromSameDomain, "Self")
+                    </td>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        @Html.TextAreaFor(m => m.CustomConnectionSources)
+                    </td>
+                </tr>
+                <tr>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        <strong>font-src</strong><br />
+                        This directive restricts from where the protected resource can load fonts.
+                    </td>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        @Html.CheckBoxFor(m => m.AllowFontsFromSameDomain)
+                        @Html.LabelFor(m => m.AllowFontsFromSameDomain, "Self")
+                    </td>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        @Html.TextAreaFor(m => m.CustomFontSources)
+                    </td>
+                </tr>
+                <tr>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        <strong>form-action</strong><br />
+                        This directive restricts which URLs can be used as the action of HTML form elements.
+                    </td>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        @Html.CheckBoxFor(m => m.AllowFormActionToSameDomain)
+                        @Html.LabelFor(m => m.AllowFormActionToSameDomain, "Self")
+                    </td>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        @Html.TextAreaFor(m => m.CustomFormActionSources)
+                    </td>
+                </tr>
+                <tr>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        <strong>frame-src</strong><br />
+                        This directive restricts from where the protected resource can embed frames.
+                    </td>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        @Html.CheckBoxFor(m => m.AllowFramesFromSameDomain)
+                        @Html.LabelFor(m => m.AllowFramesFromSameDomain, "Self")
+                    </td>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        @Html.TextAreaFor(m => m.CustomFrameSources)
+                    </td>
+                </tr>
+                <tr>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        <strong>frame-ancestors</strong><br />
+                        This directive restricts from where the protected resource can embed e.g. objects or applets.
+                    </td>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        @Html.CheckBoxFor(m => m.AllowFrameAncestorsFromSameDomain)
+                        @Html.LabelFor(m => m.AllowFrameAncestorsFromSameDomain, "Self")
+                    </td>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        @Html.TextAreaFor(m => m.CustomFrameAncestorsSources)
+                    </td>
+                </tr>
+                <tr>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        <strong>img-src</strong><br />
+                        This directive restricts from where the protected resource can load images.
+                    </td>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        z
+                        @Html.CheckBoxFor(m => m.AllowImagesFromSameDomain)
+                        @Html.LabelFor(m => m.AllowImagesFromSameDomain, "Self")
+                    </td>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        @Html.TextAreaFor(m => m.CustomImageSources)
+                    </td>
+                </tr>
+                <tr>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        <strong>script-src</strong><br />
+                        This directive restricts which scripts the protected resource can execute.
+                    </td>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        @Html.CheckBoxFor(m => m.AllowScriptsFromSameDomain)
+                        @Html.LabelFor(m => m.AllowScriptsFromSameDomain, "Self")<br />
+                        @Html.CheckBoxFor(m => m.AllowUnsafeEval)
+                        @Html.LabelFor(m => m.AllowUnsafeEval, "Eval()")<br />
+                        @Html.CheckBoxFor(m => m.AllowUnsafeInline)
+                        @Html.LabelFor(m => m.AllowUnsafeInline, "Inline")
+                    </td>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        @Html.TextAreaFor(m => m.CustomScriptSources)
+                    </td>
+                </tr>
+                <tr>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        <strong>media-src</strong><br />
+                        This directive restricts from where the protected resource can load video and audio.
+                    </td>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        @Html.CheckBoxFor(m => m.AllowMediaFromSameDomain)
+                        @Html.LabelFor(m => m.AllowMediaFromSameDomain, "Self")
+                    </td>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        @Html.TextAreaFor(m => m.CustomMediaSources)
+                    </td>
+                </tr>
+                <tr>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        <strong>object-src</strong><br />
+                        This directive restricts from where the protected resource can load plugins.
+                    </td>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        @Html.CheckBoxFor(m => m.AllowPluginsFromSameDomain)
+                        @Html.LabelFor(m => m.AllowPluginsFromSameDomain, "Self")
+                    </td>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        @Html.TextAreaFor(m => m.CustomPluginSources)
+                    </td>
+                </tr>
+                <tr>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        <strong>style-src</strong><br />
+                        This directive restricts which styles the user applies to the protected resource.
+                    </td>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        @Html.CheckBoxFor(m => m.AllowStylesFromSameDomain)
+                        @Html.LabelFor(m => m.AllowStylesFromSameDomain, "Self")<br />
+                        @Html.CheckBoxFor(m => m.AllowUnsafeInlineStyles)
+                        @Html.LabelFor(m => m.AllowUnsafeInlineStyles, "Inline")
+                    </td>
+                    <td style="white-space: nowrap; vertical-align: top;">
+                        @Html.TextAreaFor(m => m.CustomStyleSources)
+                    </td>
+                </tr>
+            </table>
+
+            <span class="epi-cmsButton">
+                <input class="epi-cmsButton-text epi-cmsButton-tools epi-cmsButton-Save" type="submit" value="Save" title="Save" />
+            </span>
+
+        </div>
+    }
+
+</body>
+</html>

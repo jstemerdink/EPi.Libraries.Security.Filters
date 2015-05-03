@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPi.Libraries.Security.Filters", "EPi.Libraries.Security.Filters\EPi.Libraries.Security.Filters.csproj", "{CCB96C41-22F9-47DF-A1CD-C92FEF7927BD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{88849449-2948-4D6F-B432-E4D107E27147}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution Files", "{5DB75DC5-AC93-48BA-A9EB-2A45C9310475}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CCB96C41-22F9-47DF-A1CD-C92FEF7927BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCB96C41-22F9-47DF-A1CD-C92FEF7927BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCB96C41-22F9-47DF-A1CD-C92FEF7927BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCB96C41-22F9-47DF-A1CD-C92FEF7927BD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
