@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <projectUrl>https://github.com/jstemerdink/EPi.Libraries.Security.Filters/</projectUrl>
+    <iconUrl>http://jstemerdink.net/images/js-nuget.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>Security filters</releaseNotes>
+    <copyright>Copyright © Jeroen Stemerdink</copyright>
+    <tags>security filters </tags>
+    <dependencies>
+      <dependency id="EPiServer.CMS.Core" version="[8.0.0, 9.0)" />
+      <dependency id="EPiServer.Framework" version="[8.0.0, 9.0)" />
+      <dependency id="NWebsec.Mvc" version="4.0.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="readme.txt" target="" />
+  </files>
+</package>
