@@ -199,7 +199,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="EPiServer.Libraries.snk" />
+    <None Include="EPiServer.Libraries.snk" />
     <None Include="NWebsecConfig\HttpHeaderSecurityModuleConfig.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -207,7 +207,7 @@
     <Content Include="EPi.Libraries.Security.Filters.nuspec" />
     <None Include="readme.txt" />
     <Content Include="Views\HeaderConfiguration\Index.cshtml" />
-    <Content Include="Views\web.config" />
+    <None Include="Views\web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -15,7 +15,6 @@
     <tags>security filters </tags>
     <dependencies>
       <dependency id="EPiServer.CMS.Core" version="[8.0.0, 9.0)" />
-      <dependency id="EPiServer.Framework" version="[8.0.0, 9.0)" />
       <dependency id="NWebsec.Mvc" version="4.0.0" />
     </dependencies>
   </metadata>
