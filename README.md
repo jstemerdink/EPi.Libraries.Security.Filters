@@ -6,6 +6,20 @@
 
 Administer security headers through EPiServer and use [NWebsec](https://github.com/NWebsec/NWebsec/wiki) to add them to your response.
 
+Don't forget to exclude the NWebsec dll's from assembly scanning, as it will throw an error.
+
+```
+<episerver.framework>
+    ...
+    <scanAssembly forceBinFolderScan="true">
+      <add assembly="*"/>
+      <remove assembly="NWebsec" />
+      <remove assembly="NWebsec.Core" />
+      <remove assembly="NWebsec.Mvc" />
+    </scanAssembly>
+    ...
+</episerver.framework>
+```
 
 ## Requirements
 
