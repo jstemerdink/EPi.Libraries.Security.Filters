@@ -12,12 +12,12 @@
 <html>
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
-    <link rel="stylesheet" type="text/css" href="@Paths.ToShellResource("8.0.0.0/ClientResources/epi/themes/legacy/ShellCore.css")"/>
-    <script type="text/javascript" src="@Paths.ToShellResource("8.0.0.0/ClientResources/ShellCore.js")"></script>
-    <link rel="stylesheet" type="text/css" href="@Paths.ToShellResource("8.0.0.0/ClientResources/epi/themes/legacy/ShellCoreLightTheme.css")" />
-    <link rel="stylesheet" type="text/css" href="@Paths.ToShellResource("8.0.0.0/ClientResources/Epi/Base/CMS.css")" />
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/App_Themes/Default/styles/system.css")">
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/App_Themes/Default/styles/ToolButton.css")">
+    <link rel="stylesheet" type="text/css" href="@Paths.ToShellClientResource("ClientResources/epi/themes/legacy/ShellCore.css")" />
+    <link rel="stylesheet" type="text/css" href="@Paths.ToShellClientResource("ClientResources/epi/themes/legacy/ShellCoreLightTheme.css")" />
+    <link rel="stylesheet" type="text/css" href="@UriSupport.ResolveUrlFromUIBySettings("ClientResources/Epi/Base/CMS.css")" />
+    <script type="text/javascript" src="@Paths.ToShellClientResource("ClientResources/ShellCore.js")"></script>
     <title>Manage security headers</title>
 </head>
 <body id="body">
