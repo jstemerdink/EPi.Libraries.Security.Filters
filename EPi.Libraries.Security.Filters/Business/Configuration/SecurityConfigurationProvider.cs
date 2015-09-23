@@ -31,8 +31,6 @@ using EPiServer.Logging;
 using EPiServer.ServiceLocation;
 using EPiServer.Shell.Composition;
 
-using NWebsec.Mvc.HttpHeaders;
-
 namespace EPi.Libraries.Security.Filters.Business.Configuration
 {
     /// <summary>
