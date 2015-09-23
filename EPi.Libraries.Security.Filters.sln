@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPi.Libraries.Security.Filters", "EPi.Libraries.Security.Filters\EPi.Libraries.Security.Filters.csproj", "{CCB96C41-22F9-47DF-A1CD-C92FEF7927BD}"
 EndProject
@@ -16,6 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		LICENSE = LICENSE
 		README.md = README.md
+		ReleaseNotes.md = ReleaseNotes.md
 	EndProjectSection
 EndProject
 Global
