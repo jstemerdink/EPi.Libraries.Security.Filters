@@ -17,7 +17,7 @@ build:
 after_build:
 - cmd: nuget pack EPi.Libraries.Security.Filters\EPi.Libraries.Security.Filters.csproj -version "%GitVersion_NuGetVersion%" -prop "target=%CONFIGURATION%"
 - cmd: appveyor PushArtifact "EPi.Libraries.Security.Filters.%GitVersion_NuGetVersion%.nupkg"
-- 7z a EPi.Libraries.Security.Filters.%GitVersion_NuGetVersion%.zip %APPVEYOR_BUILD_FOLDER%\EPi.Libraries.Security.Filters\bin\Release\EPi.Libraries.Security.Filters.dll EPi.Libraries.Security.Filters\Views\*.*\*.cshtml EPi.Libraries.Security.Filters\NWebsecConfig\*.*
+- 7z a EPi.Libraries.Security.Filters.%GitVersion_NuGetVersion%.zip EPi.Libraries.Security.Filters\bin\Release\EPi.Libraries.Security.Filters.dll EPi.Libraries.Security.Filters\Views\HeaderConfiguration\*.cshtml EPi.Libraries.Security.Filters\NWebsecConfig\*.*
 - cmd: appveyor PushArtifact "EPi.Libraries.Security.Filters.%GitVersion_NuGetVersion%.zip"
 before_package:
 - ps: >-
