@@ -1,1 +1,1 @@
-Updated to EPiServer 9 and the latest version of NWebsec.
+Updated to EPiServer 10 and the latest version of NWebsec.
