@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Jeroen Stemerdink")]
 [assembly: AssemblyProduct("EPi.Libraries.Security.Filters")]
-[assembly: AssemblyCopyright("Copyright © Jeroen Setemerdink 2015")]
+[assembly: AssemblyCopyright("Copyright © Jeroen Setemerdink 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
