@@ -1,5 +1,4 @@
-﻿// Copyright© 2015 Jeroen Stemerdink. 
-// 
+﻿// Copyright © 2016 Jeroen Stemerdink.
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
 // files (the "Software"), to deal in the Software without
@@ -8,10 +7,8 @@
 // copies of the Software, and to permit persons to whom the
 // Software is furnished to do so, subject to the following
 // conditions:
-// 
 // The above copyright notice and this permission notice shall be
 // included in all copies or substantial portions of the Software.
-// 
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
 // OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -20,19 +17,17 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
-
-using System;
-using System.Linq;
-
-using EPi.Libraries.Security.Filters.Models;
-
-using EPiServer.Data.Dynamic;
-using EPiServer.Logging;
-using EPiServer.ServiceLocation;
-using EPiServer.Shell.Composition;
-
 namespace EPi.Libraries.Security.Filters.Business.Configuration
 {
+    using System;
+    using System.Linq;
+
+    using EPi.Libraries.Security.Filters.Models;
+
+    using EPiServer.Data.Dynamic;
+    using EPiServer.Logging;
+    using EPiServer.ServiceLocation;
+
     /// <summary>
     ///     The SecurityConfigurationProvider class
     /// </summary>
@@ -60,9 +55,7 @@ namespace EPi.Libraries.Security.Filters.Business.Configuration
         {
             SecurityFilterConfiguration securityFilterConfiguration;
 
-            using (
-                DynamicDataStore store =
-                    this.DynamicDataStoreFactory.Service.GetOrCreateStore(typeof(SecurityFilterConfiguration)))
+            using (DynamicDataStore store = this.GetOrCreateStore(typeof(SecurityFilterConfiguration)))
             {
                 securityFilterConfiguration = store.Items<SecurityFilterConfiguration>().FirstOrDefault();
             }
@@ -75,14 +68,6 @@ namespace EPi.Libraries.Security.Filters.Business.Configuration
 
             this.SecurityFilterConfiguration = securityFilterConfiguration;
         }
-
-        private Injected<DynamicDataStoreFactory> DynamicDataStoreFactory { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the security filter configuration.
-        /// </summary>
-        /// <value>The security filter configuration.</value>
-        public SecurityFilterConfiguration SecurityFilterConfiguration { get; set; }
 
         /// <summary>
         ///     Gets the instance of the SecurityConfigurationProvider object.
@@ -109,58 +94,13 @@ namespace EPi.Libraries.Security.Filters.Business.Configuration
             }
         }
 
-        private static SecurityFilterConfiguration CreateNewConfiguration()
-        {
-            SecurityFilterConfiguration securityFilterConfiguration = new SecurityFilterConfiguration
-                                                                          {
-                                                                              DisableVersionHeaders 
-                                                                                = true,
-                                                                              AllowBaseUriFromSameDomain
-                                                                                  = true,
-                                                                              AllowChildSrcFromSameDomain
-                                                                                  = true,
-                                                                              AllowConnectionsFromSameDomain
-                                                                                  = true,
-                                                                              AllowFontsFromSameDomain
-                                                                                  = true,
-                                                                              AllowFormActionToSameDomain
-                                                                                  = true,
-                                                                              AllowFrameAncestorsFromSameDomain
-                                                                                  = true,
-                                                                              AllowFramesFromSameDomain
-                                                                                  = true,
-                                                                              AllowImagesFromSameDomain
-                                                                                  = true,
-                                                                              AllowMediaFromSameDomain
-                                                                                  = true,
-                                                                              AllowPluginsFromSameDomain
-                                                                                  = true,
-                                                                              AllowScriptsFromSameDomain
-                                                                                  = true,
-                                                                              AllowStylesFromSameDomain
-                                                                                  = true,
-                                                                              AllowUnsafeEval
-                                                                                  = false,
-                                                                              AllowUnsafeInline
-                                                                                  = false,
-                                                                              AllowUnsafeInlineStyles
-                                                                                  = false,
-                                                                              EnableContentSecurityPolicy
-                                                                                  = true,
-                                                                              EnableXContentTypeOptions
-                                                                                  = true,
-                                                                              EnableXDownloadOptions
-                                                                                  = true,
-                                                                              EnableXFrameOptions
-                                                                                  = true,
-                                                                              XFrameOptionsPolicy
-                                                                                  =
-                                                                                  SecurityFilterConfiguration
-                                                                                  .SameOrigin
-                                                                          };
+        /// <summary>
+        ///     Gets or sets the security filter configuration.
+        /// </summary>
+        /// <value>The security filter configuration.</value>
+        public SecurityFilterConfiguration SecurityFilterConfiguration { get; set; }
 
-            return securityFilterConfiguration;
-        }
+        private Injected<DynamicDataStoreFactory> DynamicDataStoreFactory { get; set; }
 
         /// <summary>
         /// Saves the configuration.
@@ -173,9 +113,7 @@ namespace EPi.Libraries.Security.Filters.Business.Configuration
                 return;
             }
 
-            using (
-                DynamicDataStore store =
-                    this.DynamicDataStoreFactory.Service.GetOrCreateStore(typeof(SecurityFilterConfiguration)))
+            using (DynamicDataStore store = this.GetOrCreateStore(typeof(SecurityFilterConfiguration)))
             {
                 try
                 {
@@ -184,8 +122,7 @@ namespace EPi.Libraries.Security.Filters.Business.Configuration
 
                     if (existingConfiguration != null)
                     {
-                        existingConfiguration.DisableVersionHeaders = 
-                            securityFilterConfiguration.DisableVersionHeaders;
+                        existingConfiguration.DisableVersionHeaders = securityFilterConfiguration.DisableVersionHeaders;
                         existingConfiguration.AllowBaseUriFromSameDomain =
                             securityFilterConfiguration.AllowBaseUriFromSameDomain;
                         existingConfiguration.AllowChildSrcFromSameDomain =
@@ -240,7 +177,7 @@ namespace EPi.Libraries.Security.Filters.Business.Configuration
                     }
 
                     store.Save(existingConfiguration ?? securityFilterConfiguration);
-                    
+
                     this.SecurityFilterConfiguration = securityFilterConfiguration;
 
                     System.Web.HttpRuntime.UnloadAppDomain();
@@ -250,6 +187,65 @@ namespace EPi.Libraries.Security.Filters.Business.Configuration
                     this.log.Error(argumentNullException.Message, argumentNullException);
                 }
             }
+        }
+
+        private static SecurityFilterConfiguration CreateNewConfiguration()
+        {
+            SecurityFilterConfiguration securityFilterConfiguration = new SecurityFilterConfiguration
+                                                                          {
+                                                                              DisableVersionHeaders
+                                                                                  = true,
+                                                                              AllowBaseUriFromSameDomain
+                                                                                  = true,
+                                                                              AllowChildSrcFromSameDomain
+                                                                                  = true,
+                                                                              AllowConnectionsFromSameDomain
+                                                                                  = true,
+                                                                              AllowFontsFromSameDomain
+                                                                                  = true,
+                                                                              AllowFormActionToSameDomain
+                                                                                  = true,
+                                                                              AllowFrameAncestorsFromSameDomain
+                                                                                  = true,
+                                                                              AllowFramesFromSameDomain
+                                                                                  = true,
+                                                                              AllowImagesFromSameDomain
+                                                                                  = true,
+                                                                              AllowMediaFromSameDomain
+                                                                                  = true,
+                                                                              AllowPluginsFromSameDomain
+                                                                                  = true,
+                                                                              AllowScriptsFromSameDomain
+                                                                                  = true,
+                                                                              AllowStylesFromSameDomain
+                                                                                  = true,
+                                                                              AllowUnsafeEval
+                                                                                  = false,
+                                                                              AllowUnsafeInline
+                                                                                  = false,
+                                                                              AllowUnsafeInlineStyles
+                                                                                  = false,
+                                                                              EnableContentSecurityPolicy
+                                                                                  = true,
+                                                                              EnableXContentTypeOptions
+                                                                                  = true,
+                                                                              EnableXDownloadOptions
+                                                                                  = true,
+                                                                              EnableXFrameOptions
+                                                                                  = true,
+                                                                              XFrameOptionsPolicy
+                                                                                  =
+                                                                                  SecurityFilterConfiguration
+                                                                                  .SameOrigin
+                                                                          };
+
+            return securityFilterConfiguration;
+        }
+
+        private DynamicDataStore GetOrCreateStore(Type type)
+        {
+            return this.DynamicDataStoreFactory.Service.GetStore(type)
+                   ?? this.DynamicDataStoreFactory.Service.CreateStore(type);
         }
     }
 }
