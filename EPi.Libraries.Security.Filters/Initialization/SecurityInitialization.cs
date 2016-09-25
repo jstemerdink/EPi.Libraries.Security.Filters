@@ -22,6 +22,8 @@ namespace EPi.Libraries.Security.Filters.Initialization
     using System.Web.Mvc;
     using System.Web.Routing;
 
+    using EPi.Libraries.Security.Filters.Business;
+
     using EPiServer.Framework;
     using EPiServer.Framework.Initialization;
 
@@ -41,7 +43,7 @@ namespace EPi.Libraries.Security.Filters.Initialization
         /// method will be called repeadetly for each request reaching the site until the method succeeds.</remarks>
         public void Initialize(InitializationEngine context)
         {
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            FilterProviders.Providers.Add(new SecurityFilterProvider());
             RouteConfig.RegisterRoutes(RouteTable.Routes);
         }
 

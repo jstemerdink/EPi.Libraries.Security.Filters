@@ -176,6 +176,7 @@
   <ItemGroup>
     <Compile Include="Business\Configuration\SecurityConfigurationProvider.cs" />
     <Compile Include="Business\RemoveVersionHeaders.cs" />
+    <Compile Include="Business\SecurityFilterProvider.cs" />
     <Compile Include="Controllers\HeaderConfigurationController.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Initialization\FilterConfig.cs" />

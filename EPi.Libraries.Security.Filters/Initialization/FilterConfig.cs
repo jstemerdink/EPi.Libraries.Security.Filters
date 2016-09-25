@@ -51,14 +51,28 @@ namespace EPi.Libraries.Security.Filters.Initialization
                 return;
             }
 
-            AddSecurityFilters(filters);
-            AddContentSecurityPolicyFilters(filters);
+            filters.Add(GetSecurityFilters());
+        }
+
+        /// <summary>
+        /// Gets the security filter collection.
+        /// </summary>
+        /// <returns>GlobalFilterCollection.</returns>
+        public static GlobalFilterCollection GetSecurityFilters()
+        {
+            GlobalFilterCollection securityFilters = new GlobalFilterCollection();
+
+            AddSecurityFilters(securityFilters);
+            AddContentSecurityPolicyFilters(securityFilters);
 
             if (SecurityFilterConfiguration.DisableVersionHeaders)
             {
-                filters.Add(new RemoveVersionHeaders());
+                securityFilters.Add(new RemoveVersionHeaders());
             }
+
+            return securityFilters;
         }
+
 
         /// <summary>
         ///     Adds the Content-Security-Policy (CSP) and/or Content-Security-Policy-Report-Only HTTP headers.
@@ -206,10 +220,10 @@ namespace EPi.Libraries.Security.Filters.Initialization
                                                               {
                                                                   Self =
                                                                       SecurityFilterConfiguration
-                                                                      .AllowScriptsFromSameDomain, 
+                                                                      .AllowScriptsFromSameDomain,
                                                                   UnsafeEval =
                                                                       SecurityFilterConfiguration
-                                                                      .AllowUnsafeEval, 
+                                                                      .AllowUnsafeEval,
                                                                   UnsafeInline =
                                                                       SecurityFilterConfiguration
                                                                       .AllowUnsafeInline
@@ -260,7 +274,7 @@ namespace EPi.Libraries.Security.Filters.Initialization
                                                             {
                                                                 Self =
                                                                     SecurityFilterConfiguration
-                                                                    .AllowStylesFromSameDomain, 
+                                                                    .AllowStylesFromSameDomain,
                                                                 UnsafeInline =
                                                                     SecurityFilterConfiguration
                                                                     .AllowUnsafeInlineStyles
